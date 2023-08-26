@@ -19,6 +19,12 @@ terraform {
       source = "hashicorp/random"
       version = "3.5.1"
     }
+
+
+    http = {
+      source = "hashicorp/http"
+      version = "3.4.0"
+    }
   }
 }
 
@@ -36,6 +42,12 @@ provider "local" {
 provider "random" {
 }
 
+provider "http" {
+}
 
 data "aws_caller_identity" "caller" {
+}
+
+data "http" "myip" {
+  url = "https://myip.wtf/text"
 }

@@ -10,7 +10,7 @@ resource "aws_security_group" "bastion" {
 
   ingress {
     protocol = "tcp"
-    cidr_blocks = ["117.110.115.128/32"]
+    cidr_blocks = ["${chomp(data.http.myip.response_body)}/32"]
     from_port = "22"
     to_port = "22"
   }

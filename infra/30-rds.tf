@@ -18,7 +18,7 @@ resource "aws_rds_cluster" "db" {
   database_name               = "unicorn"
   availability_zones        = ["us-east-1a", "us-east-1b", "us-east-1c"]
   db_subnet_group_name = aws_db_subnet_group.db.name
-  master_username             = "us-unicorn"
+  master_username             = "unicorn"
   manage_master_user_password = true
   vpc_security_group_ids = [aws_security_group.db.id]
   skip_final_snapshot = true

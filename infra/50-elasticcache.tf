@@ -14,9 +14,10 @@ resource "aws_elasticache_subnet_group" "redis" {
 }
 
 resource "aws_elasticache_replication_group" "redis" {
+  description = "us-unicorn-redis-cluster"
   replication_group_id       = "us-unicorn-redis-cluster"
   node_type                  = "cache.m6g.large"
-  engine_version = "7.2"
+  engine_version = "7.0"
   at_rest_encryption_enabled = true
 
   port                       = 6379

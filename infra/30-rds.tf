@@ -2,6 +2,13 @@ resource "aws_security_group" "db" {
   name        = "us-unicorn-sg-db"
   description = "Allow database traffic"
   vpc_id      = aws_vpc.main.id
+
+  lifecycle {
+    ignore_changes = [
+      ingress,
+      egress
+    ]
+  }
 }
 
 resource "aws_db_subnet_group" "db" {

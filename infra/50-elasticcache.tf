@@ -2,6 +2,13 @@ resource "aws_security_group" "redis" {
   name        = "us-unicorn-sg-redis"
   description = "Allow redis traffic"
   vpc_id      = aws_vpc.main.id
+
+  lifecycle {
+    ignore_changes = [
+      ingress,
+      egress
+    ]
+  }
 }
 
 resource "aws_elasticache_subnet_group" "redis" {

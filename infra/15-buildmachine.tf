@@ -24,6 +24,13 @@ resource "aws_security_group" "buildmachine" {
     from_port = "443"
     to_port = "443"
   }
+
+  lifecycle {
+    ignore_changes = [
+      ingress,
+      egress
+    ]
+  }
 }
 
 resource "aws_iam_role" "buildmachine" {

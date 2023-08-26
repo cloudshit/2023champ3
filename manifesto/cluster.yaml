@@ -1,0 +1,66 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: us-unicorn-cluster
+  region: us-east-1
+  version: '1.26'
+
+iam:
+  withOIDC: true
+  serviceAccounts:
+    - metadata:
+        name: location
+        namespace: dev
+      attachPolicyARNs:
+        - arn:aws:iam::790946953677:policy/unicorn-policy-location
+    - metadata:
+        name: unicorn
+        namespace: dev
+      attachPolicyARNs:
+        - arn:aws:iam::790946953677:policy/unicorn-policy-unicorn
+
+    #privateCluster:
+    #enabled: true
+    #additionalEndpointServices:
+    # - autoscaling
+    # - logs
+
+vpc:
+  id: vpc-01c5ddd2c0658ca75
+  subnets:
+    private:
+      ap-northeast-2a:
+        id: subnet-0a6b3f37513651241
+      ap-northeast-2b:
+        id: subnet-0bc9d7177ee21b198
+      ap-northeast-2c:
+        id: subnet-022cb4355b89a94c2
+
+managedNodeGroups:
+  - name: us-unicorn-nodegroup-tools
+    minSize: 2
+    desiredCapacity: 2
+    maxSize: 16
+    labels:
+      unicorn/dedicated: tool
+    instanceType: c6g.large
+    privateNetworking: true
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+  - name: us-unicorn-nodegroup-apps
+    labels:
+      unicorn/dedicated: apps
+    instanceType: c6g.large
+    desiredCapacity: 2
+    minSize: 2
+    maxSize: 16
+    privateNetworking: true
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+
+cloudWatch:
+  clusterLogging:
+    enableTypes: ["*"]

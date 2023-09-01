@@ -13,13 +13,13 @@ spec:
       labels:
         app: token
     spec:
-      serviceAccount: token
       containers:
-      - name: token
+      - name: webapp
         image: 790946953677.dkr.ecr.us-east-1.amazonaws.com/token:latest
         command:
           - ./app
-          - -redisEndpoint us-unicorn-redis-cluster.tkeulv.clustercfg.use1.cache.amazonaws.com:6379
+          - -redisEndpoint
+          - clustercfg.us-unicorn-redis-cluster.tkeulv.use1.cache.amazonaws.com:6379
         resources:
           limits:
             cpu: 100m

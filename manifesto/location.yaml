@@ -15,12 +15,14 @@ spec:
     spec:
       serviceAccount: location
       containers:
-      - name: location
+      - name: webapp
         image: 790946953677.dkr.ecr.us-east-1.amazonaws.com/location:latest
         command:
           - ./app
-          - -region us-east-1
-          - -tokenEndpoint token.dev.svc.cluster.local
+          - -region
+          - us-east-1
+          - -tokenEndpoint
+          - http://token.dev.svc.cluster.local
         resources:
           limits:
             cpu: 100m

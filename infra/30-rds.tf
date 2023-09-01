@@ -20,9 +20,10 @@ resource "aws_db_subnet_group" "db" {
   ]
 }
 
-resource "random_string" "db_pass" {
+resource "random_password" "db_pass" {
   length           = 16
   special          = true
+  override_special = "!#$%&*()-_=+[]{}<>:?"
 }
 
 resource "aws_rds_cluster" "db" {
@@ -31,7 +32,7 @@ resource "aws_rds_cluster" "db" {
   availability_zones        = ["us-east-1a", "us-east-1b", "us-east-1c"]
   db_subnet_group_name = aws_db_subnet_group.db.name
   master_username             = "unicorn"
-  master_password = random_string.db_pass.result
+  master_password = random_password.db_pass.result
   vpc_security_group_ids = [aws_security_group.db.id]
   skip_final_snapshot = true
   storage_encrypted = true
@@ -47,14 +48,14 @@ resource "aws_rds_cluster_instance" "db" {
 }
 
 resource "aws_secretsmanager_secret" "db" {
-  name = "unicorn/dbcred"
+  name_prefix = "unicorn/dbcred"
 }
 
 resource "aws_secretsmanager_secret_version" "db" {
   secret_id     = aws_secretsmanager_secret.db.id
   secret_string = jsonencode({
     "username" = aws_rds_cluster.db.master_username
-    "password" = random_string.db_pass.result
+    "password" = random_password.db_pass.result
     "engine" =  "mysql"
     "host" = aws_rds_cluster.db.endpoint
     "port" = aws_rds_cluster.db.port

@@ -41,6 +41,7 @@ resource "aws_subnet" "public_a" {
 
   tags = {
     Name = "us-unicorn-public-a"
+    "kubernetes.io/role/elb" = "1"
   }
 }
 
@@ -52,6 +53,7 @@ resource "aws_subnet" "public_b" {
 
   tags = {
     Name = "us-unicorn-public-b"
+    "kubernetes.io/role/elb" = "1"
   }
 }
 
@@ -63,6 +65,7 @@ resource "aws_subnet" "public_c" {
 
   tags = {
     Name = "us-unicorn-public-c"
+    "kubernetes.io/role/elb" = 1
   }
 }
 
@@ -177,6 +180,7 @@ resource "aws_subnet" "private_a" {
 
   tags = {
     Name = "us-unicorn-private-a"
+    "kubernetes.io/role/internal-elb" = "1"
   }
 }
 
@@ -187,6 +191,7 @@ resource "aws_subnet" "private_b" {
 
   tags = {
     Name = "us-unicorn-private-b"
+    "kubernetes.io/role/internal-elb" = "1"
   }
 }
 
@@ -197,6 +202,7 @@ resource "aws_subnet" "private_c" {
 
   tags = {
     Name = "us-unicorn-private-c"
+    "kubernetes.io/role/internal-elb" = "1"
   }
 }
 

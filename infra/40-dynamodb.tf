@@ -22,4 +22,11 @@ resource "aws_dynamodb_table" "db" {
     name = "city"
     type = "S"
   }
+
+  global_secondary_index {
+    name = "cityToUnicornID"
+    hash_key = "city"
+    range_key = "unicornID"
+    projection_type = "ALL"
+  }
 }

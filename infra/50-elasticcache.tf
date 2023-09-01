@@ -26,6 +26,7 @@ resource "aws_elasticache_replication_group" "redis" {
   node_type                  = "cache.m6g.large"
   engine_version = "7.0"
   at_rest_encryption_enabled = true
+  transit_encryption_enabled = true
 
   port                       = 6379
   parameter_group_name       = "default.redis7.cluster.on"

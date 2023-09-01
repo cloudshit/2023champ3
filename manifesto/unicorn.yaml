@@ -15,13 +15,16 @@ spec:
     spec:
       serviceAccount: unicorn
       containers:
-      - name: unicorn
+      - name: webapp
         image: 790946953677.dkr.ecr.us-east-1.amazonaws.com/unicorn:latest
         command:
           - ./app
-          - -region us-east-1
-          - -secretName unicorn/dbcred
-          - -tokenEndpoint token.dev.svc.cluster.local
+          - -region
+          - us-east-1
+          - -secretName
+          - unicorn/dbcred20230901023049687200000001
+          - -tokenEndpoint
+          - http://token.dev.svc.cluster.local
         resources:
           limits:
             cpu: 100m

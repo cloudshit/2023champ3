@@ -27,15 +27,15 @@ iam:
     # - logs
 
 vpc:
-  id: vpc-01c5ddd2c0658ca75
+  id: vpc-0ac4be62684c15941
   subnets:
     private:
       ap-northeast-2a:
-        id: subnet-0a6b3f37513651241
+        id: subnet-04e79d1ac4a5e2044
       ap-northeast-2b:
-        id: subnet-0bc9d7177ee21b198
+        id: subnet-03b7dfea409d85d01
       ap-northeast-2c:
-        id: subnet-022cb4355b89a94c2
+        id: subnet-0c9ed78f02328b4c8
 
 managedNodeGroups:
   - name: us-unicorn-nodegroup-tools
@@ -45,6 +45,7 @@ managedNodeGroups:
     labels:
       unicorn/dedicated: tool
     instanceType: c6g.large
+    amiFamily: Bottlerocket
     privateNetworking: true
     iam:
       withAddonPolicies:
@@ -57,6 +58,7 @@ managedNodeGroups:
     minSize: 2
     maxSize: 16
     privateNetworking: true
+    amiFamily: Bottlerocket
     iam:
       withAddonPolicies:
         autoScaler: true

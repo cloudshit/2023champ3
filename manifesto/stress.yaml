@@ -14,7 +14,7 @@ spec:
         app: stress
     spec:
       containers:
-      - name: stress
+      - name: webapp
         image: 790946953677.dkr.ecr.us-east-1.amazonaws.com/stress:latest
         resources:
           limits:

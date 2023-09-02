@@ -5,6 +5,7 @@ metadata:
   name: status
 spec:
   replicas: 2
+  minReadySeconds: 5
   selector:
     matchLabels:
       app: status
@@ -13,9 +14,20 @@ spec:
       labels:
         app: status
     spec:
+      readinessGates:
+        - conditionType: target-health.alb.ingress.k8s.aws/ingress_status_80
       containers:
       - name: webapp
         image: 790946953677.dkr.ecr.us-east-1.amazonaws.com/status:latest
+        livenessProbe:
+          httpGet:
+            path: /healthcheck
+            port: 8080
+          periodSeconds: 1
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/bin/sh", "-c", "sleep 20"]
         resources:
           limits:
             cpu: 100m

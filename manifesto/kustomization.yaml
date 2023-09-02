@@ -8,5 +8,6 @@ resources:
   - ./stress.yaml
   - ./token.yaml
   - ./unicorn.yaml
+  - ./ingress.yaml
 
 namespace: dev

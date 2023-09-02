@@ -5,6 +5,8 @@ no git-ops
 ```
 
 ```
+kubectl label namespace dev elbv2.k8s.aws/pod-readiness-gate-inject=enabled
+
 tolerations:
 - effect: NoSchedule
 key: dedicated

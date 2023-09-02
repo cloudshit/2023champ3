@@ -5,6 +5,7 @@ metadata:
   name: unicorn
 spec:
   replicas: 2
+  minReadySeconds: 5
   selector:
     matchLabels:
       app: unicorn
@@ -14,15 +15,26 @@ spec:
         app: unicorn
     spec:
       serviceAccount: unicorn
+      readinessGates:
+        - conditionType: target-health.alb.ingress.k8s.aws/ingress_unicorn_80
       containers:
       - name: webapp
         image: 790946953677.dkr.ecr.us-east-1.amazonaws.com/unicorn:latest
+        livenessProbe:
+          httpGet:
+            path: /healthcheck
+            port: 8080
+          periodSeconds: 1
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/bin/sh", "-c", "sleep 20"]
         command:
           - ./app
           - -region
           - us-east-1
           - -secretName
-          - unicorn/dbcred20230901023049687200000001
+          - unicorn/dbcred20230902005559248500000001
           - -tokenEndpoint
           - http://token.dev.svc.cluster.local
         resources:

@@ -20,22 +20,22 @@ iam:
       attachPolicyARNs:
         - arn:aws:iam::790946953677:policy/unicorn-policy-unicorn
 
-    #privateCluster:
-    #enabled: true
-    #additionalEndpointServices:
-    # - autoscaling
-    # - logs
+privateCluster:
+  enabled: true
+  additionalEndpointServices:
+    - autoscaling
+    - logs
 
 vpc:
-  id: vpc-0ac4be62684c15941
+  id: vpc-022877c7478894dd9
   subnets:
     private:
       ap-northeast-2a:
-        id: subnet-04e79d1ac4a5e2044
+        id: subnet-05bd58481b6de1b3e
       ap-northeast-2b:
-        id: subnet-03b7dfea409d85d01
+        id: subnet-02a779b659ca8700f
       ap-northeast-2c:
-        id: subnet-0c9ed78f02328b4c8
+        id: subnet-03a10e6f031c5441f
 
 managedNodeGroups:
   - name: us-unicorn-nodegroup-tools
@@ -47,6 +47,10 @@ managedNodeGroups:
     instanceType: c6g.large
     amiFamily: Bottlerocket
     privateNetworking: true
+    taints:
+      - key: dedicated
+        value: tool
+        effect: NoSchedule
     iam:
       withAddonPolicies:
         autoScaler: true
@@ -54,6 +58,10 @@ managedNodeGroups:
     labels:
       unicorn/dedicated: apps
     instanceType: c6g.large
+    taints:
+      - key: dedicated
+        value: app
+        effect: NoSchedule
     desiredCapacity: 2
     minSize: 2
     maxSize: 16

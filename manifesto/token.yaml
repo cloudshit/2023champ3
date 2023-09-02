@@ -6,6 +6,11 @@ metadata:
 spec:
   minReadySeconds: 5
   replicas: 2
+  tolerations:
+    - effect: NoSchedule
+      key: dedicated
+      operator: Equal
+      value: app
   selector:
     matchLabels:
       app: token
@@ -59,6 +64,9 @@ spec:
     name: token
   minReplicas: 2
   maxReplicas: 64
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 60
   metrics:
   - type: Resource
     resource:

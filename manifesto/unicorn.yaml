@@ -6,6 +6,11 @@ metadata:
 spec:
   replicas: 2
   minReadySeconds: 5
+  tolerations:
+    - effect: NoSchedule
+      key: dedicated
+      operator: Equal
+      value: app
   selector:
     matchLabels:
       app: unicorn
@@ -70,6 +75,9 @@ spec:
     name: unicorn
   minReplicas: 2
   maxReplicas: 64
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 60
   metrics:
   - type: Resource
     resource:

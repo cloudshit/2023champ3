@@ -79,8 +79,11 @@ resource "aws_instance" "buildmachine" {
     unzip awscliv2.zip
     ./aws/install
 
-    yum install -y docker
+    yum install -y docker git
     usermod -aG docker ec2-user
     systemctl enable --now docker
+
+    git clone https://github.com/cloudshit/2023champ3.git /home/ec2-user/2023champ3
+    chown ec2-user:ec2-user -R /home/ec2-user/2023champ3
   EOF
 }

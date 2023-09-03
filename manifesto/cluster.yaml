@@ -57,7 +57,7 @@ managedNodeGroups:
   - name: us-unicorn-nodegroup-apps
     labels:
       unicorn/dedicated: apps
-    instanceType: c6g.large
+    instanceType: c6g.xlarge
     taints:
       - key: dedicated
         value: app
